@@ -63,22 +63,32 @@ namespace WebAddressbookTests
             //Logout();
         }
 
-        //private void Logout()
-        //{
-        //    // Выход из системы
-        //    driver.FindElement(By.LinkText("Logout")).Click();
-        //}
-
-        private void ReturnToGroupPage()
+        private void OpenHomePage()
         {
-            // Возврат на страницу создания групп
-            driver.FindElement(By.LinkText("group page")).Click();
+            // Открытие главной страницы
+            driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
 
-        private void SubmitGroupCreation()
+        private void Login(AccountData account)
         {
-            // Создание группы
-            driver.FindElement(By.Name("submit")).Click();
+            // Ввод имени пользователя и пароль для входа
+            driver.FindElement(By.Name("user")).Clear();
+            driver.FindElement(By.Name("user")).SendKeys(account.Username);
+            driver.FindElement(By.Name("pass")).Clear();
+            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
+            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+        }
+
+        private void GoToGroupPage()
+        {
+            // Переход на страницу групп
+            driver.FindElement(By.LinkText("groups")).Click();
+        }
+
+        private void InitNewGroupCreation()
+        {
+            // Инициализируем создание новой группы
+            driver.FindElement(By.Name("new")).Click();
         }
 
         private void FillGroupForm(GroupData group)
@@ -93,33 +103,23 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
         }
 
-        private void InitNewGroupCreation()
+        private void SubmitGroupCreation()
         {
-            // Инициализируем создание новой группы
-            driver.FindElement(By.Name("new")).Click();
+            // Создание группы
+            driver.FindElement(By.Name("submit")).Click();
         }
 
-        private void GoToGroupPage()
+        private void ReturnToGroupPage()
         {
-            // Переход на страницу групп
-            driver.FindElement(By.LinkText("groups")).Click();
+            // Возврат на страницу создания групп
+            driver.FindElement(By.LinkText("group page")).Click();
         }
 
-        private void Login(AccountData account)
-        {
-            // Ввод имени пользователя и пароль для входа
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
-            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
-        }
-
-        private void OpenHomePage()
-        {
-            // Открытие главной страницы
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/");
-        }
+        //private void Logout()
+        //{
+        //    // Выход из системы
+        //    driver.FindElement(By.LinkText("Logout")).Click();
+        //}
 
         private bool IsElementPresent(By by)
         {
