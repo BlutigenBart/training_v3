@@ -27,24 +27,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        //public ContactHelper Modify(int i, GroupData newData)
-        //{
-        //    manager.Navigator.GoToGroupPage();
-        //    SelectGroup(i);
-        //    InitGroupModifications();
-        //    FillGroupForm(newData);
-        //    SubmitGroupModification();
-        //    ReturnToGroupPage();
-        //    return this;
-        //}
-        //public ContactHelper Remove(int i)
-        //{
-        //    manager.Navigator.GoToGroupPage();
-        //    SelectGroup(i);
-        //    RemoveGroup();
-        //    ReturnToGroupPage();
-        //    return this;
-        //}
+        public ContactHelper Modify(int i, ContactData newData)
+        {
+            manager.Navigator.OpenHomePage();
+            InitContactModifications(i);
+            Thread.Sleep(2000);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
+
+
+        public ContactHelper Remove(int i)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContact(i);
+            RemoveContact();
+            return this;
+        }
 
 
         public ContactHelper FillContactForm(ContactData contact)
@@ -111,8 +112,8 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("ayear")).Click();
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys(contact.Ayear);
-            driver.FindElement(By.Name("new_group")).Click();
-            new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByText(contact.New_group);
+            //driver.FindElement(By.Name("new_group")).Click();
+            //new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByText(contact.New_group);
             return this;
         }
 
@@ -129,6 +130,37 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("home page")).Click();
             return this;
         }
+
+        public ContactHelper InitContactModifications(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ index +"]/td[8]/a/img")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index +"]/td/input")).Click();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectAllContacts()
+        {
+            driver.FindElement(By.Id("MassCB")).Click();
+            return this;
+        }
+
     }
 }
 

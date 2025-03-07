@@ -40,7 +40,7 @@ namespace WebAddressbookTests
             contact.Amonth = "June";
             contact.Ayear = "2010";
 
-            contact.New_group = "New Group Name";
+            //contact.New_group = "New Group Name";
             app.Contacts.Create(contact);
         }
 
@@ -49,7 +49,31 @@ namespace WebAddressbookTests
         public void EmptyContactCreationTest()
         {
 
-            ContactData contact = new ContactData("Ulala", "Petrovich");
+            ContactData contact = new ContactData("Василий", "Петрович");
+            contact.Middlename = "Петренко";
+            contact.Nickname = "";
+            //contact.Photo = "";
+            contact.Title = "";
+            contact.Company = "";
+            contact.Address = "";
+            contact.Home = "";
+            contact.Mobile = "";
+            contact.Work = "";
+            contact.Fax = "";
+            contact.Email = "";
+            contact.Email2 = "";
+            contact.Email3 = "";
+            contact.Homepage = "";
+
+            contact.Bday = "10";
+            contact.Bmonth = "December";
+            contact.Byear = "1998";
+
+            contact.Aday = "20";
+            contact.Amonth = "December";
+            contact.Ayear = "2025";
+
+            //contact.New_group = "New Group Name";
             app.Contacts.Create(contact);
         }
     }
