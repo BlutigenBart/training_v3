@@ -24,7 +24,9 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             //driver = new FirefoxDriver();
             string geckoDriverPath = @"C:\Windows\SysWOW64\geckodriver.exe";
@@ -37,10 +39,8 @@ namespace WebAddressbookTests
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
         }
-
-        public IWebDriver Driver { get { return driver; } }
-
-        public void Stop()
+        //Диструктор, вызывается автоматически
+         ~ApplicationManager()
         {
             try
             {
@@ -52,6 +52,24 @@ namespace WebAddressbookTests
             }
             Assert.AreEqual("", verificationErrors.ToString());
         }
+
+        //Глобальный метод static реализован как Singleton, возвращает всегда один и тот же объект
+        public static ApplicationManager GetInstance()
+        {
+            //если менеджер равен нулю
+            if (! app.IsValueCreated)
+            {
+                //нужно создать
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.OpenHomePage();
+                app.Value = newInstance;
+            }
+            //если создан то ничего делать не нужно
+
+            return app.Value;
+        }
+
+        public IWebDriver Driver { get { return driver; } }
 
         public LoginHelper Auth
         { get { return loginHelper; } }

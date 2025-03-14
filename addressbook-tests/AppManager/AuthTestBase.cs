@@ -7,16 +7,14 @@ using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class TestBase
+    public class AuthTestBase : TestBase
     {
 
-        protected ApplicationManager app;
-
         [SetUp]
-        protected void SetupApplicationManager()
+        protected void SetupLogin()
         {
             //Получение доступа к единственному экземпляру который хранится в ApplicationManager
-            app = ApplicationManager.GetInstance();
+            app.Auth.Login(new AccountData("admin", "secret"));
         }
     }
 }

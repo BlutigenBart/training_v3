@@ -19,20 +19,44 @@ namespace WebAddressbookTests
         }
 
         public void Login(AccountData account)
-        {
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Click();
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
+        {   ///Если залогинены но пользователь не тот который нужен
+            if (IsLoggedIn())
+            {
+                //Если уже залогинен под нужным юзером
+                if (IsLoggedIn(account))
+                {
+                    //ничего не происходит
+                    return;
+                }
+                ///выполняется логаут
+                Logout();
+            }
+            Type(By.Name("user"), account.Username);
+            Type(By.Name("pass"), account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
-        //public void Logout()
-        //{
-        //    // Выход из системы
-        //    driver.FindElement(By.LinkText("Logout")).Click();
-        //}
+        public void Logout()
+        {
+            if (IsLoggedIn())
+            {
+                // Выход из системы
+                driver.FindElement(By.LinkText("Logout")).Click();
+            }
+
+        }
+
+        public bool IsLoggedIn()
+        {
+            return IsElementPresent(By.Name("logout"));
+        }
+
+        public bool IsLoggedIn(AccountData account)
+        {
+            // Залогинен и имя текущее пользователя в скобках равно тому тексту что указан в элементе
+            return IsLoggedIn()
+                && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
+                == "(" + account.Username + ")";
+        }
     }
 }
