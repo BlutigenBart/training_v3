@@ -21,5 +21,22 @@ namespace WebAddressbookTests
             newData.Footer = "789";
             app.Groups.Modify(1, newData);
         }
+
+
+        [Test]
+        public void EmptyGroupModificationTest()
+        {
+            // Открытие главной страницы и авторизация в TestBase
+            GroupData newData = new GroupData("789");
+            newData.Header = "987";
+            newData.Footer = "777";
+
+            // Перед модификацией проверяет, есть ли хотя бы одна группа
+            // Если группы нет, создаем ее
+            app.Groups.ConfirmGroupExists();
+
+            // Модифицируем первую группу (если она есть)
+            app.Groups.Modify(1, newData);
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace WebAddressbookTests
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
         }
-        //Диструктор, вызывается автоматически
+        //Деструктор, вызывается автоматически
          ~ApplicationManager()
         {
             try

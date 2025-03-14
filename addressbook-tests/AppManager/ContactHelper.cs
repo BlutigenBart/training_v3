@@ -18,6 +18,9 @@ namespace WebAddressbookTests
         {
         }
 
+        //хпас по которому можно определить, создан контакт или нет, чек-бокс напротив контакта
+        //td[@class = 'center']/input[@type = 'checkbox']
+
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToContactPage();
@@ -47,6 +50,51 @@ namespace WebAddressbookTests
             return this;
         }
 
+        // Для домашнего задания №8
+        public bool ContactDetection()
+        {
+            // Проверка наличия хотя бы одной группы на странице
+            return IsElementPresent(By.XPath("//td[@class = 'center']/input[@type = 'checkbox']"));
+        }
+
+        // Для домашнего задания №8
+        // Метод для проверки наличия хотя бы одной группы и создания её, если её нет
+        public ContactHelper ConfirmContactExists()
+        {
+            // Проверяем, есть ли хотя бы одна группа
+            if (!ContactDetection())
+            {
+                //Переход на страницу создания контактов
+                manager.Navigator.GoToContactPage();
+                // Если групп нет, создаем одну
+                ContactData contact = new ContactData("Vasiliy", "Dmitrievich");
+                contact.Middlename = "Andreevich";
+                contact.Nickname = "Nosok";
+                //contact.Photo = "";
+                //contact.Title = "1";
+                //contact.Company = "2";
+                //contact.Address = "3";
+                //contact.Home = "4";
+                //contact.Mobile = "5";
+                //contact.Work = "6";
+                //contact.Fax = "7";
+                //contact.Email = "8";
+                //contact.Email2 = "9";
+                //contact.Email3 = "10";
+                //contact.Homepage = "11";
+
+                //contact.Bday = "12";
+                //contact.Bmonth = "February";
+                //contact.Byear = "1900";
+
+                //contact.Aday = "15";
+                //contact.Amonth = "June";
+                //contact.Ayear = "2025";
+                Create(contact);  // Вызываем метод для создания группы
+            }
+            return this;
+        }
+
 
         public ContactHelper FillContactForm(ContactData contact)
         {
@@ -69,17 +117,17 @@ namespace WebAddressbookTests
             //driver.FindElement(By.Name("photo")).Click();
             //driver.FindElement(By.Name("photo")).Clear();
             //driver.FindElement(By.Name("photo")).SendKeys("C:\\fakepath\\Gollum.jpg");
-            driver.FindElement(By.Name("bday")).Click();
-            new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.Bday);
-            driver.FindElement(By.Name("bmonth")).Click();
-            new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.Bmonth);
-            Type(By.Name("byear"), contact.Byear);
+            //driver.FindElement(By.Name("bday")).Click();
+            //new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.Bday);
+            //driver.FindElement(By.Name("bmonth")).Click();
+            //new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.Bmonth);
+            //Type(By.Name("byear"), contact.Byear);
 
-            driver.FindElement(By.Name("aday")).Click();
-            new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText(contact.Aday);
-            driver.FindElement(By.Name("amonth")).Click();
-            new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText(contact.Amonth);
-            Type(By.Name("ayear"), contact.Ayear);
+            //driver.FindElement(By.Name("aday")).Click();
+            //new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText(contact.Aday);
+            //driver.FindElement(By.Name("amonth")).Click();
+            //new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText(contact.Amonth);
+            //Type(By.Name("ayear"), contact.Ayear);
 
             //driver.FindElement(By.Name("new_group")).Click();
             //new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByText(contact.New_group);

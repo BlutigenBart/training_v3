@@ -19,5 +19,16 @@ namespace WebAddressbookTests
             // цифра от 2-х
             app.Contacts.Remove(2);
         }
+
+        [Test]
+        public void EmptyContractRemovalTest()
+        {
+            // Перед удалением проверяет, есть ли хотя бы один контакт
+            // Если контакта нет, создаем его
+            app.Contacts.ConfirmContactExists();
+
+            // Модифицируем первую группу (если она есть)
+            app.Contacts.Remove(2);
+        }
     }
 }

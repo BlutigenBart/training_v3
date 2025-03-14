@@ -45,5 +45,20 @@ namespace WebAddressbookTests
             app.Contacts.Modify(2, newData);
 
         }
+
+        [Test]
+        public void EmptyContactModificationTest()
+        {
+            ContactData newData = new ContactData("Melkiq", "Mal");
+            newData.Middlename = "Cred";
+            newData.Nickname = "Volosok";
+
+            // Перед модификацией проверяет, есть ли хотя бы одна группа
+            // Если группы нет, создаем ее
+            app.Contacts.ConfirmContactExists();
+
+            // Модифицируем первую группу (если она есть)
+            app.Contacts.Modify(2, newData);
+        }
     }
 }

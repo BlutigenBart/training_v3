@@ -18,5 +18,16 @@ namespace WebAddressbookTests
             app.Groups.Remove(1);
         }
 
+
+        [Test]
+        public void EmptyGroupRemovalTest()
+        {
+            // Перед удалением проверяет, есть ли хотя бы одна группа
+            // Если группы нет, создаем ее
+            app.Groups.ConfirmGroupExists();
+
+            // Модифицируем первую группу (если она есть)
+            app.Groups.Remove(1);
+        }
     }
 }

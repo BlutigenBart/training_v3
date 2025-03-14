@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,6 +19,10 @@ namespace WebAddressbookTests
         {
         }
 
+        //хпас по которому можно определить, создана группа или нет, чек-бокс напротив групы
+        //span/input[@type = 'checkbox']
+        //так же можно просто через //span
+
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupPage();
@@ -30,6 +35,10 @@ namespace WebAddressbookTests
 
         public GroupHelper Modify(int i, GroupData newData)
         {
+            // Если не найден элемент (группа)
+            // то группа создается
+            // иначе не делаем ничего - продолжается основной тест
+            
             manager.Navigator.GoToGroupPage();
             SelectGroup(i);
             InitGroupModifications();
@@ -38,12 +47,36 @@ namespace WebAddressbookTests
             ReturnToGroupPage();
             return this;
         }
+
         public GroupHelper Remove(int i)
         {
             manager.Navigator.GoToGroupPage();
             SelectGroup(i);
             RemoveGroup();
             ReturnToGroupPage();
+            return this;
+        }
+
+        // Для домашнего задания №8
+        public bool GroupDetection()
+        {
+            // Проверка наличия хотя бы одной группы на странице
+            return IsElementPresent(By.XPath("//span/input[@type = 'checkbox']"));
+        }
+
+        // Для домашнего задания №8
+        // Метод для проверки наличия хотя бы одной группы и создания её, если её нет
+        public GroupHelper ConfirmGroupExists()
+        {
+            // Проверяем, есть ли хотя бы одна группа
+            if (!GroupDetection())
+            {
+                // Если групп нет, создаем одну
+                GroupData group = new GroupData("Test Group");
+                group.Header = "Test Header";
+                group.Footer = "Test Footer";
+                Create(group);  // Вызываем метод для создания группы
+            }
             return this;
         }
 
@@ -66,7 +99,6 @@ namespace WebAddressbookTests
             Type(By.Name("group_footer"), group.Footer);
             return this;
         }
-
 
         public GroupHelper SubmitGroupCreation()
         {

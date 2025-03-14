@@ -32,13 +32,13 @@ namespace WebAddressbookTests
             contact.Email3 = "Email3Test";
             contact.Homepage = "HomepageTest";
 
-            contact.Bday = "25";
-            contact.Bmonth = "February";
-            contact.Byear = "1900";
+            //contact.Bday = "25";
+            //contact.Bmonth = "February";
+            //contact.Byear = "1900";
 
-            contact.Aday = "21";
-            contact.Amonth = "June";
-            contact.Ayear = "2010";
+            //contact.Aday = "21";
+            //contact.Amonth = "June";
+            //contact.Ayear = "2010";
 
             //contact.New_group = "New Group Name";
             app.Contacts.Create(contact);
@@ -51,27 +51,27 @@ namespace WebAddressbookTests
 
             ContactData contact = new ContactData("Василий", "Петрович");
             contact.Middlename = "Петренко";
-            contact.Nickname = "";
+            contact.Nickname = "Питер Пен";
             //contact.Photo = "";
-            contact.Title = "";
-            contact.Company = "";
-            contact.Address = "";
-            contact.Home = "";
-            contact.Mobile = "";
-            contact.Work = "";
-            contact.Fax = "";
-            contact.Email = "";
-            contact.Email2 = "";
-            contact.Email3 = "";
-            contact.Homepage = "";
+            //contact.Title = "";
+            //contact.Company = "";
+            //contact.Address = "";
+            //contact.Home = "";
+            //contact.Mobile = "";
+            //contact.Work = "";
+            //contact.Fax = "";
+            //contact.Email = "";
+            //contact.Email2 = "";
+            //contact.Email3 = "";
+            //contact.Homepage = "";
 
-            contact.Bday = "10";
-            contact.Bmonth = "December";
-            contact.Byear = "1998";
+            //contact.Bday = "10";
+            //contact.Bmonth = "December";
+            //contact.Byear = "1998";
 
-            contact.Aday = "20";
-            contact.Amonth = "December";
-            contact.Ayear = "2025";
+            //contact.Aday = "20";
+            //contact.Amonth = "December";
+            //contact.Ayear = "2025";
 
             //contact.New_group = "New Group Name";
             app.Contacts.Create(contact);
