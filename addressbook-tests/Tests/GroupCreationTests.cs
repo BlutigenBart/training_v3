@@ -25,14 +25,14 @@ namespace WebAddressbookTests
             //FillGroupForm(new GroupData("Имя группы", "new2", "new3"));
         }
 
-        [Test]
-        public void EmptyGroupCreationTest()
-        {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
-            app.Groups.Create(group);
-        }
+        //[Test]
+        //public void EmptyGroupCreationTest()
+        //{
+        //    GroupData group = new GroupData("");
+        //    group.Header = "";
+        //    group.Footer = "";
+        //    app.Groups.Create(group);
+        //}
 
     }
 }

@@ -15,13 +15,6 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             // Открытие главной страницы и авторизация в TestBase
-            app.Groups.Remove(1);
-        }
-
-
-        [Test]
-        public void EmptyGroupRemovalTest()
-        {
             // Перед удалением проверяет, есть ли хотя бы одна группа
             // Если группы нет, создаем ее
             app.Groups.ConfirmGroupExists();

@@ -152,6 +152,10 @@
     <Compile Include="AppManager\NavigationHelper.cs" />
     <Compile Include="AppManager\TestBase.cs" />
     <Compile Include="3.0\ifthenelse.cs" />
+    <Compile Include="OldFilesSavedForMyself\ContactModificationTests1.cs" />
+    <Compile Include="OldFilesSavedForMyself\ContactRemovalTests1.cs" />
+    <Compile Include="OldFilesSavedForMyself\GroupModificationTests1.cs" />
+    <Compile Include="OldFilesSavedForMyself\GroupRemovalTests1.cs" />
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
     <Compile Include="Tests\ContactModificationTests.cs" />

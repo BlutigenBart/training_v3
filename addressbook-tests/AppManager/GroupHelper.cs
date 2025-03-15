@@ -58,7 +58,7 @@ namespace WebAddressbookTests
         }
 
         // Для домашнего задания №8
-        public bool GroupDetection()
+        public bool IsGroupDetection()
         {
             // Проверка наличия хотя бы одной группы на странице
             return IsElementPresent(By.XPath("//span/input[@type = 'checkbox']"));
@@ -69,7 +69,7 @@ namespace WebAddressbookTests
         public GroupHelper ConfirmGroupExists()
         {
             // Проверяем, есть ли хотя бы одна группа
-            if (!GroupDetection())
+            if (!IsGroupDetection())
             {
                 // Если групп нет, создаем одну
                 GroupData group = new GroupData("Test Group");
@@ -77,7 +77,7 @@ namespace WebAddressbookTests
                 group.Footer = "Test Footer";
                 Create(group);  // Вызываем метод для создания группы
             }
-            return this;
+            return this; //Возвращает GroupHelper так как в нем еще есть методы и вызывает их цепочкой
         }
 
         public GroupHelper InitNewGroupCreation()

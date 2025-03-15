@@ -51,7 +51,7 @@ namespace WebAddressbookTests
         }
 
         // Для домашнего задания №8
-        public bool ContactDetection()
+        public bool IsContactDetection()
         {
             // Проверка наличия хотя бы одной группы на странице
             return IsElementPresent(By.XPath("//td[@class = 'center']/input[@type = 'checkbox']"));
@@ -62,7 +62,7 @@ namespace WebAddressbookTests
         public ContactHelper ConfirmContactExists()
         {
             // Проверяем, есть ли хотя бы одна группа
-            if (!ContactDetection())
+            if (!IsContactDetection())
             {
                 //Переход на страницу создания контактов
                 manager.Navigator.GoToContactPage();

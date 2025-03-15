@@ -12,24 +12,14 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupModificationTests : AuthTestBase
     {
+
         [Test]
         public void GroupModificationTest()
         {
             // Открытие главной страницы и авторизация в TestBase
-            GroupData newData = new GroupData("123");
-            newData.Header = "346";
-            newData.Footer = "789";
-            app.Groups.Modify(1, newData);
-        }
-
-
-        [Test]
-        public void EmptyGroupModificationTest()
-        {
-            // Открытие главной страницы и авторизация в TestBase
-            GroupData newData = new GroupData("789");
-            newData.Header = "987";
-            newData.Footer = "777";
+            GroupData newData = new GroupData("NEW NAME");
+            newData.Header = "NEW HEADER";
+            newData.Footer = "NEW FOOTER";
 
             // Перед модификацией проверяет, есть ли хотя бы одна группа
             // Если группы нет, создаем ее
