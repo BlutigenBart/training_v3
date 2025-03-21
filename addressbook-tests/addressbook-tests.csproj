@@ -49,6 +49,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.0-preview.1.25080.5\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.6.0.0\lib\net462\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Testing.Extensions.MSBuild, Version=1.6.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Testing.Platform.MSBuild.1.6.2\lib\netstandard2.0\Microsoft.Testing.Extensions.MSBuild.dll</HintPath>
@@ -170,6 +173,7 @@
     <None Include="Configs\app.config" />
     <None Include="1.5\ClassDiagram1.cd" />
     <None Include="Configs\packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\MSTest.Analyzers.3.8.2\analyzers\dotnet\cs\MSTest.Analyzers.CodeFixes.dll" />

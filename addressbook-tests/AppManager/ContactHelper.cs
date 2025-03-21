@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -150,7 +152,7 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModifications(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+1) +"]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+2) +"]/td[8]/a/img")).Click();
             return this;
         }
 
@@ -162,7 +164,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+1) +"]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+2) +"]/td/input")).Click();
             return this;
         }
 
@@ -176,6 +178,29 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Id("MassCB")).Click();
             return this;
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();//Пустой список
+            manager.Navigator.OpenHomePage();
+            // получение элементов представлющих контакты
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("table tbody tr[name='entry']"));
+            
+            foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
+            {
+                // XPath для извлечения имени и фамилии
+                string lastname = element.FindElement(By.XPath(".//td[2]")).Text;
+                string firstname = element.FindElement(By.XPath(".//td[3]")).Text;
+                
+
+                // Добавляем контакт в список
+                contacts.Add(new ContactData(firstname, lastname));
+            }
+
+            return contacts;
+
+            //ICollection<IWebElement> более общий тип
         }
 
     }

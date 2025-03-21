@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,7 +16,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            
+
             ContactData contact = new ContactData("Boris", "Moiseev");
             contact.Middlename = "Mikhailovich";
             contact.Nickname = "Light";
@@ -41,40 +42,42 @@ namespace WebAddressbookTests
             //contact.Ayear = "2010";
 
             //contact.New_group = "New Group Name";
+
+            List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
+
             app.Contacts.Create(contact);
+
+            //список объектов типа ContactData
+            //List Контейнер или коллекция, объект который хранит набор других объектов
+            List<ContactData> newContacts = app.Contacts.GetContactList(); //Получение списка контактов после создания контакта
+            oldContacts.Add(contact);
+
+            oldContacts.Sort();
+            newContacts.Sort();
+            //Перед сравнением упорядочиваем
+            Assert.AreEqual(oldContacts, newContacts);
+
         }
 
 
-        //[Test]
-        //public void EmptyContactCreationTest()
-        //{
+        [Test]
+        public void BadNameContactCreationTest()
+        {
 
-        //    ContactData contact = new ContactData("Василий", "Петрович");
-        //    contact.Middlename = "Петренко";
-        //    contact.Nickname = "Питер Пен";
-        //    //contact.Photo = "";
-        //    //contact.Title = "";
-        //    //contact.Company = "";
-        //    //contact.Address = "";
-        //    //contact.Home = "";
-        //    //contact.Mobile = "";
-        //    //contact.Work = "";
-        //    //contact.Fax = "";
-        //    //contact.Email = "";
-        //    //contact.Email2 = "";
-        //    //contact.Email3 = "";
-        //    //contact.Homepage = "";
+            ContactData contact = new ContactData("a'a", "b'b");
+            contact.Middlename = "c'c";
 
-        //    //contact.Bday = "10";
-        //    //contact.Bmonth = "December";
-        //    //contact.Byear = "1998";
+            List<ContactData> oldContacts = app.Contacts.GetContactList(); 
 
-        //    //contact.Aday = "20";
-        //    //contact.Amonth = "December";
-        //    //contact.Ayear = "2025";
+            app.Contacts.Create(contact);
 
-        //    //contact.New_group = "New Group Name";
-        //    app.Contacts.Create(contact);
-        //}
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+
+            oldContacts.Sort();
+            newContacts.Sort();
+            //Перед сравнением упорядочиваем
+            Assert.AreEqual(oldContacts, newContacts);
+        }
     }
 }

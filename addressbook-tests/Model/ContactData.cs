@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace addressbook_tests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstname;
         private string middlename;
@@ -40,6 +40,46 @@ namespace addressbook_tests
         {
             this.firstname = firstname;
             this.lastname = lastname;
+        }
+
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null)) //если тот объект с которым мы сравниваем это null
+            {
+                return false; //возвращаем ложь, так как текущий объект есть и точно не равен тому который null
+            }
+            if (Object.ReferenceEquals(this, other)) //две ссылки указывают на 1 и тот же объект тогда тру
+            {
+                return true; //проверки не нужны так, как сравниваем объект с самим собой
+            }
+            return lastname == other.lastname && firstname == other.firstname;
+            
+        }
+
+        public override int GetHashCode() //Оптимизация сравнения
+        {
+            return HashCode.Combine(lastname, firstname);
+        }
+
+        public override string ToString()
+        {
+            return "lastname" + lastname + " firstname" + firstname;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null)) //равен ли второй объект null
+            {
+                return 1; //если второй объект равен null, возвращает 1. текущий объект больше null
+            }
+            // Если фамилии роазные возвращает результат их сравнения
+            int lastNameCompare = lastname.CompareTo(other.lastname);
+            if (lastNameCompare != 0)
+            {
+                return lastNameCompare; //если фамилии не одинаковы, возвращает результат их сравнения
+            }
+            //если фамилии одинаковы, переходит к сравнению имен
+            return firstname.CompareTo(other.firstname);
         }
 
         public string Firstname
