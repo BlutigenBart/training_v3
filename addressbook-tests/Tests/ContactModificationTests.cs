@@ -30,6 +30,8 @@ namespace WebAddressbookTests
             //начинается с 2-х в ColtractHelpers метода InitContactModifications прописано в хпасе index + 2
             app.Contacts.Modify(0, newData);
 
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
+
             //список объектов типа ContactData
             //List Контейнер или коллекция, объект который хранит набор других объектов
             List<ContactData> newContacts = app.Contacts.GetContactList(); //Получение списка контактов после создания контакта

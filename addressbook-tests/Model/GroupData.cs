@@ -52,8 +52,8 @@ namespace addressbook_tests
         public GroupData(string name, string header, string footer)
         {
             Name = name;
-            Name = header;
-            Name = footer;
+            Header = header;
+            Footer = footer;
         }
 
         public string Name { get; set; }

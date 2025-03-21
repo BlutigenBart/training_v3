@@ -140,6 +140,7 @@ namespace WebAddressbookTests
         {
             // Создание контакта
             driver.FindElement(By.XPath("//div[@id='content']/form/input[20]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -159,6 +160,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -171,6 +173,7 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -179,28 +182,41 @@ namespace WebAddressbookTests
             driver.FindElement(By.Id("MassCB")).Click();
             return this;
         }
+        private List<ContactData> contactCache = null;
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();//Пустой список
-            manager.Navigator.OpenHomePage();
-            // получение элементов представлющих контакты
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("table tbody tr[name='entry']"));
-            
-            foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
+            if (contactCache == null)
             {
-                // XPath для извлечения имени и фамилии
-                string lastname = element.FindElement(By.XPath(".//td[2]")).Text;
-                string firstname = element.FindElement(By.XPath(".//td[3]")).Text;
-                
+                contactCache = new List<ContactData>();
+                manager.Navigator.OpenHomePage();
+                // получение элементов представлющих контакты
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table/tbody/tr[@name = 'entry']"));
 
-                // Добавляем контакт в список
-                contacts.Add(new ContactData(firstname, lastname));
+                foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
+                {
+                    // XPath для извлечения имени и фамилии
+                    string lastname = element.FindElement(By.XPath(".//td[2]")).Text;
+                    string firstname = element.FindElement(By.XPath(".//td[3]")).Text;
+
+                    // Добавляем контакт в список
+                    //contactCache.Add(new ContactData(firstname, lastname));
+
+                    contactCache.Add(new ContactData(firstname, lastname)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
             }
 
-            return contacts;
+            return new List<ContactData>(contactCache);
 
             //ICollection<IWebElement> более общий тип
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.CssSelector("table tbody tr[name='entry']")).Count;
         }
 
     }

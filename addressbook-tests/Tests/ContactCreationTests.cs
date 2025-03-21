@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -44,8 +45,9 @@ namespace WebAddressbookTests
             //contact.New_group = "New Group Name";
 
             List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
-
             app.Contacts.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount()); // проверяет список на появление нового объекта
 
             //список объектов типа ContactData
             //List Контейнер или коллекция, объект который хранит набор других объектов
@@ -70,6 +72,7 @@ namespace WebAddressbookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList(); 
 
             app.Contacts.Create(contact);
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contact);

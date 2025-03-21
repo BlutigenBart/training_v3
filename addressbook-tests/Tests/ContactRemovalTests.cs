@@ -27,13 +27,21 @@ namespace WebAddressbookTests
             //начинается с 2-х в ColtractHelpers метода SelectContact прописано в хпасе index + 2
             app.Contacts.Remove(0);
 
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
+
             //список объектов типа ContactData
             //List Контейнер или коллекция, объект который хранит набор других объектов
             List<ContactData> newContacts = app.Contacts.GetContactList(); //Получение списка контактов после создания контакта
 
+            ContactData toBeRemoved = oldContacts[0];
             oldContacts.RemoveAt(0);
             //Перед сравнением упорядочиваем
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts) //проверка на то что удалена была именно та запись
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
 
         }
 
