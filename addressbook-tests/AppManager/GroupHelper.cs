@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -138,5 +139,22 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();//Пустой список
+            manager.Navigator.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
+            {
+                groups.Add(new GroupData(element.Text));
+
+                //Можно не делать промежуточную переменную а сразу добавить, см выше
+                //GroupData group = new GroupData(element.Text);
+                //groups.Add(group);
+            }
+            return groups;
+
+            //ICollection<IWebElement> более общий тип
+        }
     }
 }
