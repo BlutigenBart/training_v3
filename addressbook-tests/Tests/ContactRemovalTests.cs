@@ -17,11 +17,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+            List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
+
             // Перед удалением проверяет, есть ли хотя бы один контакт
             // Если контакта нет, создаем его
             app.Contacts.ConfirmContactExists();
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
             // Открытие главной страницы и авторизация в TestBase
             //начинается с 2-х в ColtractHelpers метода SelectContact прописано в хпасе index + 2
             app.Contacts.Remove(0);

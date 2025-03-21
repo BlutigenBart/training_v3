@@ -21,11 +21,11 @@ namespace WebAddressbookTests
             newData.Middlename = "NEW Middlename";
             newData.Nickname = "NEW Nickname";
 
+            List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
+
             // Перед модификацией проверяет, есть ли хотя бы одна группа
             // Если группы нет, создаем ее
             app.Contacts.ConfirmContactExists();
-
-            List<ContactData> oldContacts = app.Contacts.GetContactList(); //Получение списка контактов до создания контактов
 
             //начинается с 2-х в ColtractHelpers метода InitContactModifications прописано в хпасе index + 2
             app.Contacts.Modify(0, newData);

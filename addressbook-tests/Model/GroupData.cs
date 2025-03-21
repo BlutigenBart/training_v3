@@ -10,13 +10,10 @@ namespace addressbook_tests
     //IEquatable<GroupData> // класс можно сравнивать с другими объектами GroupData
     //IComparable<GroupData> // можно сранивать с другими объектами GroupData
     {
-        private string name;
-        private string header = "";
-        private string footer = "";
 
         public GroupData(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         public bool Equals (GroupData other)
@@ -54,45 +51,18 @@ namespace addressbook_tests
 
         public GroupData(string name, string header, string footer)
         {
-            this.name = name;
-            this.name = header;
-            this.name = footer;
+            Name = name;
+            Name = header;
+            Name = footer;
         }
 
-        public string Name
-        {
-            get // возвращает значение поля
-            {
-                return name;
-            }
-            set // присваивает значение
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }
+        
+        public string Header { get; set; }
 
-        public string Header
-        {
-            get // возвращает значение поля
-            {
-                return header;
-            }
-            set // присваивает значение
-            {
-                header = value;
-            }
-        }
+        public string Footer { get; set; }
 
-        public string Footer
-        {
-            get // возвращает значение поля
-            {
-                return footer;
-            }
-            set // присваивает значение
-            {
-                footer = value;
-            }
-        }
+        public string Id { get; set; }
+
     }
 }

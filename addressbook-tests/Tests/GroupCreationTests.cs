@@ -24,6 +24,9 @@ namespace WebAddressbookTests
             group.Footer = "newFooter3";
             List<GroupData> oldGroups = app.Groups.GetGroupList(); //Получение списка групп до создания группы
             app.Groups.Create(group); //Создание группы
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount()); // проверяет список на появление нового объекта
+
             //список объектов типа GroupData
             //List Контейнер или коллекция, объект который хранит набор других объектов
             List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
@@ -35,7 +38,6 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups, newGroups);
             
             //Assert.AreEqual(oldGroups.Count + 1, newGroups.Count); //кол-во элементов в списке увеличилось на 1
-            
             // Конструктор если полей не так много и понятно что и куда вводить
             //FillGroupForm(new GroupData("Имя группы", "new2", "new3"));
         }
@@ -48,6 +50,8 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
             app.Groups.Create(group);
 
@@ -67,6 +71,8 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
             app.Groups.Create(group);
 
