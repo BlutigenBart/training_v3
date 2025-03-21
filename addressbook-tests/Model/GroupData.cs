@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace addressbook_tests
 {
-    public class GroupData : IEquatable<GroupData> //класс можно сравнивать с другими объектами GroupData 
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
+    //IEquatable<GroupData> // класс можно сравнивать с другими объектами GroupData
+    //IComparable<GroupData> // можно сранивать с другими объектами GroupData
     {
         private string name;
         private string header = "";
@@ -30,9 +32,23 @@ namespace addressbook_tests
             return Name == other.Name;
         }
 
-        public int GetHashCode() //Оптимизация сравнения
+        public override int GetHashCode() //Оптимизация сравнения
         { 
             return Name.GetHashCode(); 
+        }
+
+        public override string ToString()
+        {
+            return  "name" + Name;
+        }
+
+        public int CompareTo(GroupData other)
+        {
+            if (Object.ReferenceEquals(other, null)) //если второй объект с которым мы сравниваем равен null
+            {
+                return 1; //одназначно текущий объект больше
+            }
+            return Name.CompareTo(other.Name);// если не null можно сравнивать по смыслу
         }
 
 

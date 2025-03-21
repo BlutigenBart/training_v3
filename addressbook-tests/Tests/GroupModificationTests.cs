@@ -25,8 +25,17 @@ namespace WebAddressbookTests
             // Если группы нет, создаем ее
             app.Groups.ConfirmGroupExists();
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList(); //Получение списка групп до создания группы
+
             // Модифицируем первую группу (если она есть)
             app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            //Перед сравнением упорядочиваем
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
