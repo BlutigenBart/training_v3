@@ -25,7 +25,7 @@ namespace WebAddressbookTests
             app.Contacts.ConfirmContactExists();
 
             //Цифру ставить от 2-х
-            app.Contacts.Modify(2, newData);
+            app.Contacts.Modify(1, newData);
 
         }
 

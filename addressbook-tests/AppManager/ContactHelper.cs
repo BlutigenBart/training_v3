@@ -150,7 +150,7 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModifications(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ index +"]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+1) +"]/td[8]/a/img")).Click();
             return this;
         }
 
@@ -162,7 +162,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index +"]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+1) +"]/td/input")).Click();
             return this;
         }
 

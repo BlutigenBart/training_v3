@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using addressbook_tests;
+using Assert = NUnit.Framework.Assert;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -19,8 +20,18 @@ namespace WebAddressbookTests
             // Если группы нет, создаем ее
             app.Groups.ConfirmGroupExists();
 
-            // Модифицируем первую группу (если она есть)
-            app.Groups.Remove(1);
+            List<GroupData> oldGroups = app.Groups.GetGroupList(); //Получение списка групп до создания группы
+
+            // Удаляем первую группу (если она есть)
+            app.Groups.Remove(0);
+
+            //список объектов типа GroupData
+            //List Контейнер или коллекция, объект который хранит набор других объектов
+            List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
+
+            oldGroups.RemoveAt(0);
+
+            Assert.AreEqual(oldGroups, newGroups);  // сравнение списков, списка до удаления и после удаления
         }
     }
 }

@@ -26,7 +26,7 @@ namespace WebAddressbookTests
             app.Groups.ConfirmGroupExists();
 
             // Модифицируем первую группу (если она есть)
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(0, newData);
         }
     }
 }

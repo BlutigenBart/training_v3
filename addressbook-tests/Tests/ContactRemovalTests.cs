@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             app.Contacts.ConfirmContactExists();
             // Открытие главной страницы и авторизация в TestBase
             // цифра от 2-х
-            app.Contacts.Remove(2);
+            app.Contacts.Remove(1);
         }
 
     }

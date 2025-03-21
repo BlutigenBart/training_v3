@@ -43,8 +43,8 @@ namespace WebAddressbookTests
 
             app.Groups.Create(group);
 
-            List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count); //кол-во элементов в списке увеличилось на 1
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
         }
 
 
@@ -59,8 +59,8 @@ namespace WebAddressbookTests
 
             app.Groups.Create(group);
 
-            List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count); //Проверка кол-во элементов в списке увеличилось на 1
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
         }
 
     }
