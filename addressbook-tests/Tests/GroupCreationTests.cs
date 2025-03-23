@@ -30,10 +30,11 @@ namespace WebAddressbookTests
             //список объектов типа GroupData
             //List Контейнер или коллекция, объект который хранит набор других объектов
             List<GroupData> newGroups = app.Groups.GetGroupList(); //Получение списка групп после создания группы
+           
             oldGroups.Add(group);
-            
             oldGroups.Sort();
             newGroups.Sort();
+
             //Перед сравнением упорядочиваем
             Assert.AreEqual(oldGroups, newGroups);
             
@@ -59,6 +60,7 @@ namespace WebAddressbookTests
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
+
             Assert.AreEqual(oldGroups, newGroups);
         }
 

@@ -199,13 +199,13 @@ namespace WebAddressbookTests
                     string lastname = element.FindElement(By.XPath(".//td[2]")).Text;
                     string firstname = element.FindElement(By.XPath(".//td[3]")).Text;
 
-                    // Добавляем контакт в список
-                    //contactCache.Add(new ContactData(firstname, lastname));
+                    //Добавляем контакт в список
+                    contactCache.Add(new ContactData(firstname, lastname));
 
-                    contactCache.Add(new ContactData(firstname, lastname)
-                    {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
-                    });
+                    //contactCache.Add(new ContactData(firstname, lastname) //по уровку 4.5
+                    //{
+                    //    Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    //});
                 }
             }
 

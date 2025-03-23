@@ -35,11 +35,12 @@ namespace WebAddressbookTests
             //список объектов типа ContactData
             //List Контейнер или коллекция, объект который хранит набор других объектов
             List<ContactData> newContacts = app.Contacts.GetContactList(); //Получение списка контактов после создания контакта
+            
             oldContacts[0].Lastname = newData.Lastname;
             oldContacts[0].Firstname = newData.Firstname;
-         
             oldContacts.Sort();
             newContacts.Sort();
+
             //Перед сравнением упорядочиваем
             Assert.AreEqual(oldContacts, newContacts);
 
