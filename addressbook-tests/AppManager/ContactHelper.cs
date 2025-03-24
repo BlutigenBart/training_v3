@@ -204,7 +204,7 @@ namespace WebAddressbookTests
 
                     //contactCache.Add(new ContactData(firstname, lastname) //по уровку 4.5
                     //{
-                    //    Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    //    Id = element.FindElement(By.TagName("td")).GetAttribute("id")
                     //});
                 }
             }
