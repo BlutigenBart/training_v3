@@ -14,26 +14,38 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomGroupDataProvider()
         {
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData()
+                {
+                    Firstname = GenerateRandomString(30),
+                    Lastname = GenerateRandomString(30),
+                    Middlename = GenerateRandomString(30),
+                    Nickname = GenerateRandomString(30),
+                    Title = GenerateRandomString(30),
+                    Company = GenerateRandomString(30),
+                    Address = GenerateRandomString(30),
+                    Home = GenerateRandomString(30),
+                    Mobile = GenerateRandomString(30),
+                    Work = GenerateRandomString(30),
+                    Fax = GenerateRandomString(30),
+                    Email = GenerateRandomString(30),
+                    Email2  = GenerateRandomString(30),
+                    Email3 = GenerateRandomString(30),
+                    Homepage = GenerateRandomString(30)
+                });
+            }
+            return contacts;
+        }
 
-            ContactData contact = new ContactData("Boris", "Moiseev");
-            contact.Middlename = "Mikhailovich";
-            contact.Nickname = "Light";
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             //contact.Photo = "";
-            contact.Title = "TitleTest";
-            contact.Company = "CompanyTest";
-            contact.Address = "AddressTest";
-            contact.Home = "HomeTest";
-            contact.Mobile = "MobileTest";
-            contact.Work = "WorkTest";
-            contact.Fax = "FaxTest";
-            contact.Email = "EmailTest";
-            contact.Email2 = "Email2Test";
-            contact.Email3 = "Email3Test";
-            contact.Homepage = "HomepageTest";
-
+            
             //contact.Bday = "25";
             //contact.Bmonth = "February";
             //contact.Byear = "1900";
