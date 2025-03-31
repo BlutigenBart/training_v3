@@ -61,7 +61,7 @@ namespace WebAddressbookTests
             {
                 //нужно создать
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.Navigator.OpenHomePage();
+                newInstance.Navigator.GoToHomePage();
                 app.Value = newInstance;
             }
             //если создан то ничего делать не нужно

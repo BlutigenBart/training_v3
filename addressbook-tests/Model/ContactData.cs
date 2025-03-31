@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Diagnostics.Eventing.Reader;
 
 namespace addressbook_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string allPhones;
-        private string allEmails;
         public string Firstname { get; set; }
         public string Middlename { get; set; }
         public string Lastname { get; set; }
@@ -34,6 +34,9 @@ namespace addressbook_tests
         public string Ayear { get; set; }
         public string New_group { get; set; }
         public string Id { get; set; }
+        private string allPhones;
+        private string allEmails;
+        private string fullName;
         public string AllPhones
         {
             get
@@ -51,6 +54,18 @@ namespace addressbook_tests
             {
                 allPhones = value;
             }
+        }
+        private string CleanUpPhone(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            // Меняем символы на пустые строки
+            //return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").
+                Replace(")", "").Replace("H:", "").Replace("M:", "").
+                Replace("W:", "").Replace("\r", "").Replace("\n", "") + "\r\n";
         }
         public string AllEmails
         {
@@ -79,19 +94,46 @@ namespace addressbook_tests
             // Меняем символы на пустые строки
             return email.Replace(" ", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
-        private string CleanUpPhone(string phone)
+        public string FullName
         {
-            if (phone == null || phone == "")
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                else
+                {
+                    return Firstname + " " + Middlename + " " + Lastname;
+                }
+
+            }
+            set => fullName = value;
+        }
+        //идет как Имя, Отчество, Фамилия
+        //нужно вытащить отдельно Имя и Фамилию из примера текста (Борис Андреевич Моисеев)
+        private string CleanUpNames(string names)
+        {
+            if (names == null || names == "")
             {
                 return "";
             }
+            else
+            {
+
+            }
             // Меняем символы на пустые строки
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return names.Replace(" ", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
             Lastname = lastname;
+        }
+
+        public ContactData()
+        {
         }
         public bool Equals(ContactData other)
         {
