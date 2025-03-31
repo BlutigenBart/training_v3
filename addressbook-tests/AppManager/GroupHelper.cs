@@ -153,17 +153,60 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
                 {
-                    groupCache.Add(new GroupData(element.Text)
+                    groupCache.Add(new GroupData(null)
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
                 }
+              //Берется текст из локатора
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+              //Split режет сразу на кусочки, за 1 запрос к браузеру получены имена всех групп
+                string[] parts = allGroupNames.Split('\n');
+              //Определение величины сдвига, насколько в кеше правильных групп меньше чем тех которые смогли получить
+                int shift = groupCache.Count - parts.Length;
+              //Прописываются имена в ранее созданные группы, перебор элементов по индексу, обращение к кешу и масиву кусочков
+                for (int i = 0; i < groupCache.Count; i++) 
+                {
+                    //если индекс i меньше чем сдвиг
+                    if (i < shift)
+                    {
+                        //прописывается пустое имя
+                        groupCache[i].Name = "";
+                    }
+                    else
+                    {
+                        //Прочтено и порезано на кусочки методом Split('\n')
+                        //Trim() удаляет лишние пробельные символы в начале и конце группы
+                        //иначе прописывается именно то имя но со сдвигом
+                        groupCache[i].Name = parts[i-shift].Trim();
+                    }
+                }
             }
-
             return new List<GroupData>(groupCache);
-
             //ICollection<IWebElement> более общий тип
         }
+
+        // До изменений
+        //public List<GroupData> GetGroupList()
+        //{
+        //    if (groupCache == null)
+        //    {
+        //        groupCache = new List<GroupData>();
+        //        manager.Navigator.GoToGroupPage();
+        //        ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+        //        foreach (IWebElement element in elements) //Для каждого элемента в такой то коллекции нужно выполнить какие то действия
+        //        {
+        //            groupCache.Add(new GroupData(element.Text)
+        //            {
+        //                Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+        //            });
+        //        }
+        //    }
+
+        //    return new List<GroupData>(groupCache);
+
+        //    //ICollection<IWebElement> более общий тип
+        //}
 
         public int GetGroupCount()
         {

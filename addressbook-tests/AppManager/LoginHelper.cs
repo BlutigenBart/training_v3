@@ -55,8 +55,15 @@ namespace WebAddressbookTests
         {
             // Залогинен и имя текущее пользователя в скобках равно тому тексту что указан в элементе
             return IsLoggedIn()
-                && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text 
-                == "(" + account.Username + ")";
+                && GetLoggetUserName() == account.Username;
+        }
+
+        public string GetLoggetUserName()
+        {
+           //сохранение в текст
+           string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+           //извлеч на 2 меньше чем общая длинна строки, отрезаем 1 и последний элемент строки
+           return text.Substring(1, text.Length - 2);
         }
     }
 }

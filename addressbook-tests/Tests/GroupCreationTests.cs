@@ -23,6 +23,7 @@ namespace WebAddressbookTests
             group.Header = "newHeader2";
             group.Footer = "newFooter3";
             List<GroupData> oldGroups = app.Groups.GetGroupList(); //Получение списка групп до создания группы
+
             app.Groups.Create(group); //Создание группы
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount()); // проверяет список на появление нового объекта

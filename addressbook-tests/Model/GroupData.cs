@@ -10,6 +10,10 @@ namespace addressbook_tests
     //IEquatable<GroupData> // класс можно сравнивать с другими объектами GroupData
     //IComparable<GroupData> // можно сранивать с другими объектами GroupData
     {
+        public string Name { get; set; }
+        public string Header { get; set; }
+        public string Footer { get; set; }
+        public string Id { get; set; }
 
         public GroupData(string name)
         {
@@ -55,14 +59,6 @@ namespace addressbook_tests
             Header = header;
             Footer = footer;
         }
-
-        public string Name { get; set; }
-        
-        public string Header { get; set; }
-
-        public string Footer { get; set; }
-
-        public string Id { get; set; }
 
     }
 }
