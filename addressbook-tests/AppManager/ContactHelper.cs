@@ -11,6 +11,8 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using Assert = NUnit.Framework.Assert;
 using System.Text.RegularExpressions;
+using System.Linq;
+using OpenQA.Selenium.BiDi.Communication;
 
 namespace WebAddressbookTests
 // Когда вызывается в этом хелпере метод в результате возвращается ссылка на него же самого
@@ -84,6 +86,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(0);
+
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string middlName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
@@ -122,48 +125,39 @@ namespace WebAddressbookTests
                 Email2 = email2,
                 Email3 = email3,
                 Homepage = homepage,
+
             };
         }
 
-        public ContactData GetContactInformationFromDetailsForm(int index)
+        public ContactData GetContactInformationFromDetailsForm()
         {
             manager.Navigator.GoToHomePage();
             InitContactDetails(0);
 
             string fullText = driver.FindElement(By.XPath("//div[@id = 'content']")).Text;
-            string normText = fullText.Replace("\r\n", "\n");
+            string normText = fullText.Replace("\r\n", "\n").Replace("<br>", "")
+                .Replace("H: ", "").Replace("M: ", "").Replace("W: ", "")
+                .Replace("F: ", "").Replace("Homepage:", "");
+
+            //string[] lines = fullText.Split('\n');
             string[] lines = normText.Split('\n');
 
             string fullName = lines[0];
-            string nickname = lines[1];
-            string title = lines[2];
-            string company = lines[3];
-            string address = lines[4];
-            string home = lines[6].Replace("H:", "").Replace(" ","");
-            string mobile = lines[7].Replace("M:", "").Replace(" ", "");
-            string work = lines[8].Replace("W:", "").Replace(" ", "");
-            string fax = lines[9].Replace("F:", "").Replace(" ", "");
-            string email = lines[11];
-            string email2 = lines[12];  
-            string email3 = lines[13];
-            string homepage = lines[15];
 
+            string allInformationOnDetails = "";
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                if (lines[i] != "")
+                {
+                    allInformationOnDetails = allInformationOnDetails + lines[i] + "\r\n";
+                }
+            }
 
             return new ContactData()
             {
                 FullName = fullName,
-                Nickname = nickname,
-                Title = title,
-                Company = company,
-                Address = address,
-                Home = home,
-                Mobile = mobile,
-                Work = work,
-                Fax = fax,
-                Email = email,
-                Email2 = email2,
-                Email3 = email3,
-                Homepage = homepage,
+                AllInformationOnDetails = allInformationOnDetails.Trim(),
             };
         }
 

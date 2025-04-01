@@ -37,6 +37,7 @@ namespace addressbook_tests
         private string allPhones;
         private string allEmails;
         private string fullName;
+        private string allInformationOnDetails;
         public string AllPhones
         {
             get
@@ -47,7 +48,7 @@ namespace addressbook_tests
                 }
                 else
                 {
-                    return CleanUpPhone(Home) + CleanUpPhone(Mobile) + CleanUpPhone(Work).Trim();
+                    return (CleanUpPhone(Home) + CleanUpPhone(Mobile) + CleanUpPhone(Work)).Trim();
                 }
             }
             set
@@ -77,7 +78,7 @@ namespace addressbook_tests
                 }
                 else
                 {
-                    return CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3).Trim();
+                    return (CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
                 }
             }
             set
@@ -92,7 +93,8 @@ namespace addressbook_tests
                 return "";
             }
             // Меняем символы на пустые строки
-            return email.Replace(" ", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return email.Replace(" ", "").Replace("(", "").Replace(")", "")
+                .Replace("\r", "").Replace("\n", "") + "\r\n";
         }
         public string FullName
         {
@@ -104,7 +106,7 @@ namespace addressbook_tests
                 }
                 else
                 {
-                    return Firstname + " " + Middlename + " " + Lastname;
+                    return (CleanUpNames(Firstname) + CleanUpNames(Middlename) + CleanUpNames(Lastname)).Trim();
                 }
 
             }
@@ -123,7 +125,55 @@ namespace addressbook_tests
 
             }
             // Меняем символы на пустые строки
-            return names.Replace(" ", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return names.Replace("(", "").Replace(")", "")
+                .Replace("\r", "").Replace("\n", "")
+                .Replace("<br>", "")
+                + " ";
+        }
+
+        public string AllInformationOnDetails
+        {
+            get
+            {
+                if (allInformationOnDetails != null)
+                {
+                    return allInformationOnDetails;
+                }
+                else
+                {
+                    return (CleanUpDetails(Nickname) +
+                        CleanUpDetails(Title) +
+                        CleanUpDetails(Company) +
+                        CleanUpDetails(Address) +
+                        CleanUpDetails(Home) +
+                        CleanUpDetails(Mobile) +
+                        CleanUpDetails(Work) +
+                        CleanUpDetails(Fax) +
+                        CleanUpDetails(Email) +
+                        CleanUpDetails(Email2) +
+                        CleanUpDetails(Email3) +
+                        CleanUpDetails(Homepage)).Trim();
+                }
+
+            }
+            set => allInformationOnDetails = value;
+        }
+
+        private string CleanUpDetails(string details)
+        {
+            if (details == null || details == "")
+            {
+                return "";
+            }
+            else
+            {
+
+            }
+            // Меняем символы на пустые строки
+            return details.Replace("(", "").Replace(")", "")
+                .Replace("\r", "").Replace("\n", "").Replace("<br>", "")
+                .Replace("H:", "").Replace("M:", "").Replace("W:", "")
+                .Replace("F:", "").Replace("Homepage:", "") + "\r\n";
         }
 
         public ContactData(string firstname, string lastname)
