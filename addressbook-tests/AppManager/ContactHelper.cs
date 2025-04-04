@@ -135,15 +135,9 @@ namespace WebAddressbookTests
             InitContactDetails(0);
 
             string fullText = driver.FindElement(By.XPath("//div[@id = 'content']")).Text;
-            string normText = fullText.Replace("\r\n", "\n").Replace("<br>", "")
-                .Replace("H: ", "").Replace("M: ", "").Replace("W: ", "")
-                .Replace("F: ", "").Replace("Homepage:", "");
-
-            //string[] lines = fullText.Split('\n');
+            string normText = fullText.Replace("\r\n", "\n").Replace("<br>", "");
             string[] lines = normText.Split('\n');
-
             string fullName = lines[0];
-
             string allInformationOnDetails = "";
 
             for (int i = 1; i < lines.Length; i++)

@@ -145,14 +145,14 @@ namespace addressbook_tests
                         CleanUpDetails(Title) +
                         CleanUpDetails(Company) +
                         CleanUpDetails(Address) +
-                        CleanUpDetails(Home) +
-                        CleanUpDetails(Mobile) +
-                        CleanUpDetails(Work) +
-                        CleanUpDetails(Fax) +
+                        "H: " + CleanUpDetails(Home) +
+                        "M: " + CleanUpDetails(Mobile) +
+                        "W: " + CleanUpDetails(Work) +
+                        "F: " + CleanUpDetails(Fax) + 
                         CleanUpDetails(Email) +
                         CleanUpDetails(Email2) +
                         CleanUpDetails(Email3) +
-                        CleanUpDetails(Homepage)).Trim();
+                        "Homepage:" + "\r\n" + CleanUpDetails(Homepage)).Trim();
                 }
 
             }
@@ -172,8 +172,7 @@ namespace addressbook_tests
             // Меняем символы на пустые строки
             return details.Replace("(", "").Replace(")", "")
                 .Replace("\r", "").Replace("\n", "").Replace("<br>", "")
-                .Replace("H:", "").Replace("M:", "").Replace("W:", "")
-                .Replace("F:", "").Replace("Homepage:", "") + "\r\n";
+                 + "\r\n";
         }
 
         public ContactData(string firstname, string lastname)
