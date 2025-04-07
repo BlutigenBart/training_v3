@@ -10,6 +10,11 @@ using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 using System.IO.Ports;
 using System.Runtime.Remoting.Messaging;
+using System.Xml;
+using System.Xml.Serialization;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
 
 
 namespace WebAddressbookTests
@@ -31,7 +36,7 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        public static IEnumerable<GroupData> GroupDataFromFie()
+        public static IEnumerable<GroupData> GroupDataFromCsvFie()
         {
             List<GroupData> groups = new List<GroupData>();
             string[] lines = File.ReadAllLines(@"groups1.csv");
@@ -47,8 +52,99 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        [Test, TestCaseSource("GroupDataFromFie")]
-        public void GroupCreationTest1(GroupData group)
+        public static IEnumerable<GroupData> GroupDataFromXmlFie()
+        {
+            //(List<GroupData>) Приведение типа
+            return (List<GroupData>)
+                // XmlSerializer читает данные типа(List<GroupData>)
+                new XmlSerializer(typeof(List<GroupData>))
+                // из указанного файла
+                .Deserialize(new StreamReader(@"groups.xml"));
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromJsonFie()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"groups.json"));
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromExcelFie()
+        {
+            //  Создание списка в котором хранятся данные записанные из Excel
+            List<GroupData> groups =new  List<GroupData>();
+            // Создание объектаApplication, управляющего процессом работы с Excel
+            Excel.Application app = new Excel.Application();
+            // Установка видимости приложения
+            app.Visible = true;
+            // Открытие Excel по указанному пути и сохраняем его
+            // Directory.GetCurrentDirectory() возвращает текущую рабочую директорию, где запущено приложение
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            // Получение первого листа книги
+            Excel.Worksheet sheet = wb.Sheets[1];
+            // Получение диапазона всех используемых ячеек
+            Excel.Range range = sheet.UsedRange;
+
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                // Данные преобразуются в строки, так как ячейки Excel могут содержать различные типы данных
+                // (например, числа или даты)
+                groups.Add(new GroupData()
+                {
+                    Name = Convert.ToString(range.Cells[i, 1].Value),
+                    Header = Convert.ToString(range.Cells[i, 2].Value),
+                    Footer = Convert.ToString(range.Cells[i, 3].Value)
+                });
+            }
+            // Закрытие книги
+            wb.Close();
+            // Скрытие приложения
+            app.Visible = false;
+            // Завершение работы приложения
+            app.Quit();
+            return groups;
+        }
+
+        [Test, TestCaseSource("GroupDataFromCsvFie")]
+        public void GroupCreationTestCsv(GroupData group)
+        {
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test, TestCaseSource("GroupDataFromXmlFie")]
+        public void GroupCreationTestXml(GroupData group)
+        {
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test, TestCaseSource("GroupDataFromJsonFie")]
+        public void GroupCreationTestJson(GroupData group)
+        {
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test, TestCaseSource("GroupDataFromExcelFie")]
+        public void GroupCreationTestExcel(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();
             app.Groups.Create(group);
