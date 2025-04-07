@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO; // Для работы с с классом File
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -7,6 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
+using System.IO.Ports;
+using System.Runtime.Remoting.Messaging;
 
 
 namespace WebAddressbookTests
@@ -26,6 +29,35 @@ namespace WebAddressbookTests
                 });
             }
             return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromFie()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups1.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2],
+                });
+            }
+            return groups;
+        }
+
+        [Test, TestCaseSource("GroupDataFromFie")]
+        public void GroupCreationTest1(GroupData group)
+        {
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test, TestCaseSource("RandomGroupDataProvider")]

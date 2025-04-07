@@ -135,24 +135,53 @@ namespace addressbook_tests
         {
             get
             {
+
+
                 if (allInformationOnDetails != null)
                 {
                     return allInformationOnDetails;
                 }
                 else
                 {
+                    string homeTel = "";
+                    string mobileTel = "";
+                    string workTel = "";
+                    string faxW = "";
+                    string homePages = "";
+                    if (CleanUpDetails(Home) != "")
+                    {
+                        homeTel = "H: " + CleanUpDetails(Home);
+                    }
+                    if (CleanUpDetails(Mobile) != "")
+                    {
+                        mobileTel = "M: " + CleanUpDetails(Mobile);
+                    }
+                    if (CleanUpDetails(Work) != "")
+                    {
+                        workTel = "W: " + CleanUpDetails(Work);
+                    }
+                    if (CleanUpDetails(Fax) != "")
+                    {
+                        faxW = "F: " + CleanUpDetails(Fax);
+                    }
+                    if (CleanUpDetails(Homepage) != "")
+                    {
+                        homePages = "Homepage:\r\n" + CleanUpDetails(Homepage);
+                    }
+
                     return (CleanUpDetails(Nickname) +
                         CleanUpDetails(Title) +
                         CleanUpDetails(Company) +
                         CleanUpDetails(Address) +
-                        "H: " + CleanUpDetails(Home) +
-                        "M: " + CleanUpDetails(Mobile) +
-                        "W: " + CleanUpDetails(Work) +
-                        "F: " + CleanUpDetails(Fax) + 
-                        CleanUpDetails(Email) +
+                        homeTel +
+                        mobileTel +
+                        workTel +
+                        faxW +
+                        CleanUpDetails(Email) + 
                         CleanUpDetails(Email2) +
                         CleanUpDetails(Email3) +
-                        "Homepage:" + "\r\n" + CleanUpDetails(Homepage)).Trim();
+                        homePages.Trim()
+                        ).TrimEnd('\r', '\n');
                 }
 
             }
