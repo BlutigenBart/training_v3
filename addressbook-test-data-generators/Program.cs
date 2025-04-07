@@ -24,7 +24,7 @@ namespace addressbook_test_data_generators
 // addressbook-test-data-generators.exe contact 3 contacts.csv csv
 // addressbook-test-data-generators.exe contact 3 contacts.xml xml
 // addressbook-test-data-generators.exe contact 3 contacts.json json
-// addressbook-test-data-generators.exe contact 3 contacts.xlsx csexcelv
+// addressbook-test-data-generators.exe contact 3 contacts.xlsx excel
 {
     internal class Program
     {

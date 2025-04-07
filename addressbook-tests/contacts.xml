@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContactData>
+    <Firstname>8</Firstname>
+    <Middlename>9</Middlename>
+    <Lastname>:</Lastname>
+    <Nickname>G</Nickname>
+    <Title>X</Title>
+    <Company>J</Company>
+    <Address>3</Address>
+    <Home>&amp;</Home>
+    <Mobile>:</Mobile>
+    <Work>*</Work>
+    <Fax>7</Fax>
+    <Email>G</Email>
+    <Email2>/</Email2>
+    <Email3>-</Email3>
+    <Homepage>B</Homepage>
+    <AllPhones>&amp;
+:
+*</AllPhones>
+    <AllEmails>G
+/
+-</AllEmails>
+    <FullName>8 9 :</FullName>
+    <AllInformationOnDetails>G
+X
+J
+3
+H: &amp;
+M: :
+W: *
+F: 7
+G
+/
+-
+Homepage:
+B</AllInformationOnDetails>
+  </ContactData>
+  <ContactData>
+    <Firstname>B</Firstname>
+    <Middlename>W</Middlename>
+    <Lastname>]</Lastname>
+    <Nickname>4</Nickname>
+    <Title>N</Title>
+    <Company>A</Company>
+    <Address>-</Address>
+    <Home>J</Home>
+    <Mobile>U</Mobile>
+    <Work>8</Work>
+    <Fax>.</Fax>
+    <Email>&lt;</Email>
+    <Email2>&amp;</Email2>
+    <Email3>O</Email3>
+    <Homepage>/</Homepage>
+    <AllPhones>J
+U
+8</AllPhones>
+    <AllEmails>&lt;
+&amp;
+O</AllEmails>
+    <FullName>B W ]</FullName>
+    <AllInformationOnDetails>4
+N
+A
+-
+H: J
+M: U
+W: 8
+F: .
+&lt;
+&amp;
+O
+Homepage:
+/</AllInformationOnDetails>
+  </ContactData>
+  <ContactData>
+    <Firstname>F</Firstname>
+    <Middlename>&gt;</Middlename>
+    <Lastname>4</Lastname>
+    <Nickname>#</Nickname>
+    <Title>(</Title>
+    <Company>I</Company>
+    <Address>W</Address>
+    <Home>X</Home>
+    <Mobile>J</Mobile>
+    <Work>M</Work>
+    <Fax>=</Fax>
+    <Email>,</Email>
+    <Email2>V</Email2>
+    <Email3>C</Email3>
+    <Homepage>O</Homepage>
+    <AllPhones>X
+J
+M</AllPhones>
+    <AllEmails>,
+V
+C</AllEmails>
+    <FullName>F &gt; 4</FullName>
+    <AllInformationOnDetails>#
+
+I
+W
+H: X
+M: J
+W: M
+F: =
+,
+V
+C
+Homepage:
+O</AllInformationOnDetails>
+  </ContactData>
+</ArrayOfContactData>
