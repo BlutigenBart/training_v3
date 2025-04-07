@@ -1,12 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Security.Cryptography;
+using System.IO; // Для работы с с классом File
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using addressbook_tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
+using System.IO.Ports;
+using System.Runtime.Remoting.Messaging;
+using System.Xml;
+using System.Xml.Serialization;
+using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
 
 
 namespace WebAddressbookTests
@@ -14,7 +22,7 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        public static IEnumerable<ContactData> RandomGroupDataProvider()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contacts = new List<ContactData>();
             for (int i = 0; i < 5; i++)
@@ -41,7 +49,26 @@ namespace WebAddressbookTests
             return contacts;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<ContactData> ContactDataFromJsonFie()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFie")]
+        public void ContactCreationTestJson(ContactData contact)
+        {
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            app.Contacts.Create(contact);
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
         public void ContactCreationTest(ContactData contact)
         {
             //contact.Photo = "";
