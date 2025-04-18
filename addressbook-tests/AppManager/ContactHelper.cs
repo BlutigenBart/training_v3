@@ -185,11 +185,34 @@ namespace WebAddressbookTests
             ReturnToHomePage();
             return this;
         }
+        /// <summary>
+        /// Новая модификация по уроку 7.2
+        /// </summary>
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModifications(contact.Id);
+            Thread.Sleep(2000);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToHomePage();
+            return this;
+        }
 
         public ContactHelper Remove(int i)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(i);
+            RemoveContact();
+            return this;
+        }
+        /// <summary>
+        /// Новое удаления из урока 7.2
+        /// </summary>
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
             RemoveContact();
             return this;
         }
@@ -316,6 +339,11 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+2) +"]/td[8]/a/img")).Click();
             return this;
         }
+        public ContactHelper InitContactModifications(String id)
+        {
+            driver.FindElement(By.XPath("//input[@value = '"+id+ "']/parent::td/following-sibling::td[7]/a/img")).Click();
+            return this;
+        }
 
         public ContactHelper SubmitContactModification()
         {
@@ -360,6 +388,7 @@ namespace WebAddressbookTests
                     string firstname = element.FindElement(By.XPath("./td[3]")).Text;
                     //Добавляем контакт в список
                     contactCache.Add(new ContactData(firstname, lastname));
+
                     //contactCache.Add(new ContactData(firstname, lastname) //по уровку 4.5
                     //{
                     //    Id = element.FindElement(By.TagName("td")).GetAttribute("id")
@@ -375,6 +404,36 @@ namespace WebAddressbookTests
             return driver.FindElements(By.CssSelector("table tbody tr[name='entry']")).Count;
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void SelectContact(string contactid)
+        {
+            driver.FindElement(By.Id(contactid)).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
     }
 }
 

@@ -11,12 +11,45 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    //public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
     {
+        /// <summary>
+        /// Новый тест по уроку 7.2
+        /// </summary>
+        [Test]
+        public void ContactModificationTestDB()
+        {
+            ContactData newData = new ContactData("NEW Firstname MODIFICATION DB", "NEW Lastname MODIFICATION DB");
+            newData.Middlename = "NEW Middlename MODIFICATION DB";
+            newData.Nickname = "NEW Nickname MODIFICATION DB";
+
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData oldData = oldContacts[0];
+            app.Contacts.ConfirmContactExists();
+            app.Contacts.Modify(oldData, newData);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
+
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts[0].Firstname = newData.Firstname;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.Id == oldData.Id)
+                {
+                    Assert.AreEqual(contact.Firstname, newData.Firstname);
+                }
+            }
+        }
+
+
         [Test]
         public void ContactModificationTest()
         {
-            
             ContactData newData = new ContactData("NEW Firstname", "NEW Lastname");
             newData.Middlename = "NEW Middlename";
             newData.Nickname = "NEW Nickname";
@@ -44,13 +77,11 @@ namespace WebAddressbookTests
 
             foreach (ContactData contact in newContacts)
             {
-                if(contact.Id == oldData.Id)
+                if (contact.Id == oldData.Id)
                 {
                     Assert.AreEqual(contact.Firstname, newData.Firstname);
                 }
             }
-
         }
-
     }
 }

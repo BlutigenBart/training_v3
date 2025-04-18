@@ -16,9 +16,7 @@ namespace WebAddressbookTests
 {
     public class GroupHelper : HelperBase
     {
-        public GroupHelper(ApplicationManager manager) : base(manager)
-        {
-        }
+        public GroupHelper(ApplicationManager manager) : base(manager){}
 
         //хпас по которому можно определить, создана группа или нет, чек-бокс напротив групы
         //span/input[@type = 'checkbox']
@@ -48,6 +46,19 @@ namespace WebAddressbookTests
             ReturnToGroupPage();
             return this;
         }
+        /// <summary>
+        /// Новая модификация по уроку 7.2
+        /// </summary>
+        public GroupHelper Modify(GroupData group, GroupData newData)
+        {
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(group.Id);
+            InitGroupModifications();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupPage();
+            return this;
+        }
 
         public GroupHelper Remove(int i)
         {
@@ -57,10 +68,22 @@ namespace WebAddressbookTests
             ReturnToGroupPage();
             return this;
         }
+        /// <summary>
+        /// Новое удаления из урока 7.2
+        /// </summary>
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(group.Id);
+            RemoveGroup();
+            ReturnToGroupPage();
+            return this;
+        }
 
         // Для домашнего задания №8
         public bool IsGroupDetection()
         {
+            manager.Navigator.GoToGroupPage();
             // Проверка наличия хотя бы одной группы на странице
             return IsElementPresent(By.XPath("//span/input[@type = 'checkbox']"));
         }
@@ -119,6 +142,14 @@ namespace WebAddressbookTests
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index+1) + "]/input")).Click();
+            return this;
+        }
+        /// <summary>
+        /// Новый метод выбора группы из урока 7.2
+        /// </summary>
+        public GroupHelper SelectGroup(String id)
+        {
+            driver.FindElement(By.XPath("//input[@name = 'selected[]' and @value ='"+id+"']")).Click();
             return this;
         }
 
@@ -212,5 +243,6 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+
     }
 }

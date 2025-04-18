@@ -15,12 +15,15 @@ using System.Xml.Serialization;
 using Microsoft.Office.Interop.Excel;
 using Excel = Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Data;
 
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    //public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -62,6 +65,22 @@ namespace WebAddressbookTests
             app.Contacts.Create(contact);
             Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
             List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+        }
+
+        /// <summary>
+        /// Новый тест по уроку 7.2
+        /// </summary>
+        [Test, TestCaseSource("ContactDataFromJsonFie")]
+        public void ContactCreationTestJsonDB(ContactData contact)
+        {
+            List<ContactData> oldContacts = ContactData.GetAll();
+            app.Contacts.Create(contact);
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
@@ -123,5 +142,6 @@ namespace WebAddressbookTests
             //Перед сравнением упорядочиваем
             Assert.AreEqual(oldContacts, newContacts);
         }
+
     }
 }

@@ -10,6 +10,10 @@ namespace WebAddressbookTests
 {
     public class TestBase
     {
+        /// <summary>
+        /// Включение и выключение настройки для групп и контактов на странцах GroupTestBase и ContactTestBase 
+        /// </summary>
+        public static bool PERFORM_LONG_UI_CHECKS = true;
 
         protected ApplicationManager app;
 

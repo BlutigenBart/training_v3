@@ -10,8 +10,40 @@ using WebAddressbookTests;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    //public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
+
     {
+        /// <summary>
+        /// Новый тест по уроку 7.2
+        /// </summary>
+        [Test]
+        public void GroupModificationTestDB()
+        {
+            app.Groups.ConfirmGroupExists();
+            GroupData newData = new GroupData("NEW NAME MODIFY DB");
+            newData.Header = "NEW HEADER MODIFY DB";
+            newData.Footer = "NEW FOOTER MODIFY DB";
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData oldData = oldGroups[0];
+
+            app.Groups.Modify(oldData, newData);
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount()); 
+
+            List<GroupData> newGroups = GroupData.GetAll();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(group.Name, newData.Name);
+                }
+            }
+        }
 
         [Test]
         public void GroupModificationTest()
