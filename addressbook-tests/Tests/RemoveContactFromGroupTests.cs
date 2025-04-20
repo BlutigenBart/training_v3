@@ -11,23 +11,23 @@ using System.Linq;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class AddingContactToGroupTests : AuthTestBase
+    public class RemoveContactFromGroupTests : AuthTestBase
     {
         [Test]
-        public void AddingContactToGroupTest()
+        public void RemoveContactFromGroupTest()
         {
             GroupData group = GroupData.GetAll()[0];
+            app.Contacts.ConfirmContactToGroupExists(group);
+
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();
 
-            app.Contacts.AddContactToGroup(contact, group);
+            ContactData contactToRemove = oldList.First();
+
+            app.Contacts.RemoveContactFromGroup(contactToRemove, group);
 
             List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
-            newList.Sort();
-            oldList.Sort();
-
-            Assert.AreEqual(oldList, newList);
+            Assert.AreEqual(oldList.Count - 1, newList.Count);
         }
     }
 }

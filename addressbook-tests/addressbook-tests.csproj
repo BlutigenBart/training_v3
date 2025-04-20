@@ -194,6 +194,7 @@
     <Compile Include="OldFilesSavedForMyself\ContactRemovalTests1.cs" />
     <Compile Include="OldFilesSavedForMyself\GroupModificationTests1.cs" />
     <Compile Include="OldFilesSavedForMyself\GroupRemovalTests1.cs" />
+    <Compile Include="Tests\RemoveContactFromGroupTests.cs" />
     <Compile Include="Tests\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />

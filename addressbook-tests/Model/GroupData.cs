@@ -39,6 +39,7 @@ namespace addressbook_tests
 
             }
         }
+
         public GroupData()
         {
         }

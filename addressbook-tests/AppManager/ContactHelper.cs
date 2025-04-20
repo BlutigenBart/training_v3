@@ -13,6 +13,7 @@ using Assert = NUnit.Framework.Assert;
 using System.Text.RegularExpressions;
 using System.Linq;
 using OpenQA.Selenium.BiDi.Communication;
+using Google.Protobuf.WellKnownTypes;
 
 namespace WebAddressbookTests
 // Когда вызывается в этом хелпере метод в результате возвращается ссылка на него же самого
@@ -434,6 +435,64 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("add")).Click();
         }
+
+        public void GoToGroup(GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupInFilter(group.Id);
+        }
+
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupInFilter(group.Id);
+            SelectContact(contact.Id);
+            CommitDeletingContactToGroup();
+            GoToGroupAfterDeletingContact();
+            //new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            //    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void SelectGroupInFilter(string id)
+        {
+            driver.FindElement(By.XPath("//select[@name = 'group']/option[@value ='" + id + "']")).Click();
+        }
+
+        public void CommitDeletingContactToGroup()
+        {
+            driver.FindElement(By.XPath("//input[@name = 'remove']")).Click();
+        }
+
+        public void GoToGroupAfterDeletingContact()
+        {
+            driver.FindElement(By.XPath("//a[contains(., 'group page')]")).Click();
+        }
+
+
+
+
+        /// <summary>
+        /// Проверка наличия хотоя бы одного контакта в группе
+        /// </summary>
+        public ContactHelper ConfirmContactToGroupExists(GroupData group)
+        {
+            // Проверяем, есть ли хотя бы одна группа
+            if (!IsContactDetectionInGroup(group))
+            {
+                manager.Navigator.GoToContactPage();
+                ContactData contact = ContactData.GetAll().First();
+                AddContactToGroup(contact, group);
+            }
+            return this;
+        }
+        public bool IsContactDetectionInGroup(GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupInFilter(group.Id);
+            // Проверка наличия хотя бы одной группы на странице
+            return IsElementPresent(By.XPath("//td[@class = 'center']/input[@type = 'checkbox']"));
+        }
+
     }
 }
 
