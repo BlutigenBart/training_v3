@@ -16,11 +16,12 @@ namespace WebAddressbookTests
         [Test]
         public void RemoveContactFromGroupTest()
         {
+            app.Contacts.ConfirmContactExists();
+            app.Groups.ConfirmGroupExists();
             GroupData group = GroupData.GetAll()[0];
             app.Contacts.ConfirmContactToGroupExists(group);
 
             List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
 
             ContactData contactToRemove = oldList.First();
 

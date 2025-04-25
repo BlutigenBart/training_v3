@@ -57,8 +57,8 @@ namespace WebAddressbookTests
         }
         public ContactData GetContactInformationFromEditForm(int index)
         {
-           manager.Navigator.GoToHomePage();
-           InitContactModification(0);
+            manager.Navigator.GoToHomePage();
+            InitContactModification(0);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
@@ -96,7 +96,7 @@ namespace WebAddressbookTests
             string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
             string company = driver.FindElement(By.Name("company")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-            
+
 
             string home = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobile = driver.FindElement(By.Name("mobile")).GetAttribute("value");
@@ -263,6 +263,33 @@ namespace WebAddressbookTests
             return this;
         }
 
+        // Для домашнего задания №8
+        // Метод для проверки наличия хотя бы одной группы и создания её, если её нет
+        public ContactHelper ConfirmContactExistsBD()
+        {
+            if (!ContactData.GetAll().Any())
+            {
+                manager.Navigator.GoToContactPage();
+
+                ContactData contact = new ContactData
+                {
+                    Firstname = "Vasiliy",
+                    Lastname = "Dmitrievich",
+                    Middlename = "Andreevich",
+                    Nickname = "Nosok"
+                };
+
+                Create(contact);
+            }
+            return this;
+        }
+        //public bool IsContactDetection(string id)
+        //{
+        //    manager.Navigator.GoToHomePage();
+        //    // Проверка наличия хотя бы одной группы на странице
+        //    return IsElementPresent(By.XPath("//input[@id = '" + id + "']"));
+        //}
+
 
         public ContactHelper FillContactForm(ContactData contact)
         {
@@ -337,12 +364,12 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModifications(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ (index+2) +"]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[8]/a/img")).Click();
             return this;
         }
         public ContactHelper InitContactModifications(String id)
         {
-            driver.FindElement(By.XPath("//input[@value = '"+id+ "']/parent::td/following-sibling::td[7]/a/img")).Click();
+            driver.FindElement(By.XPath("//input[@value = '" + id + "']/parent::td/following-sibling::td[7]/a/img")).Click();
             return this;
         }
 
@@ -355,7 +382,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+2) +"]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td/input")).Click();
             return this;
         }
 
@@ -468,9 +495,6 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//a[contains(., 'group page')]")).Click();
         }
 
-
-
-
         /// <summary>
         /// Проверка наличия хотоя бы одного контакта в группе
         /// </summary>
@@ -492,6 +516,51 @@ namespace WebAddressbookTests
             // Проверка наличия хотя бы одной группы на странице
             return IsElementPresent(By.XPath("//td[@class = 'center']/input[@type = 'checkbox']"));
         }
+
+        /// <summary>
+        /// Проверка наличия хотоя бы одного контакта не в группе
+        /// </summary>
+        public ContactHelper ConfirmContactWithGroupNotExists(GroupData group)
+        {
+            if (IsContactDetectionInGroup(group))
+            {
+                ContactData contact = group.GetContacts().First();
+                RemoveContactFromGroup(contact, group);
+            }
+            return this;
+        }
+
+        public bool IsContactDetectionInHome(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            ContactInList(contact.Id);
+            // Проверка наличия хотя бы одной группы на странице
+            return IsElementPresent(By.XPath("//td[@class = 'center']/input[@type = 'checkbox']"));
+        }
+
+        public void ContactInList(string id)
+        {
+            driver.FindElement(By.XPath("//input[@id = '" + id + "']")).Click();
+        }
+
+        //В этом задании основную сложность представляет проверка и обеспечение предусловий.
+
+        //Во-первых, контактов или групп может не быть вообще, в этом случае нужно их создать.
+
+        //Во-вторых, для добавления контакта в группу нужно найти такую пару контакт и группа,
+        //что контакт в группу не входит. Потому что "добавление контакта в группу, в которую он уже входит"
+        //это совершенно отдельный тест. При этом нужно учесть, что все контакты могут быть уже добавлены во все группы.
+        //Например, попробуйте запустить тест в ситуации, когда есть один контакт и одна группа,
+        //в которую этот контакт уже добавлен.
+
+        //Аналогично, для удаления контакта из группы нужно найти подходящую пару.
+        //Нельзя взять первую попавшуюся группу и первый попавшийся контакт.
+        //При этом может быть ситуация, что найти такую пару невозможно.
+        //Например, попробуйте запустить тест в ситуации, когда есть один контакт и одна группа, в которую контакт не добавлен.
+
+        //А ещё в тесте для удаления контакта есть вот такая строчка, явно лишняя:
+        //ContactData contact = ContactData.GetAll().Except(oldList).First();
+        //потому что переменная contcat дальше нигде не используется.
 
     }
 }
