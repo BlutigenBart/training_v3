@@ -22,6 +22,7 @@ namespace addressbook_tests
         public string Footer { get; set; }
         [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
+        public GroupData() {}
         public static List<GroupData> GetAll()
         {
             using (AddressBookDB db = new AddressBookDB())
@@ -38,10 +39,6 @@ namespace addressbook_tests
                         select c).Distinct().ToList();
 
             }
-        }
-
-        public GroupData()
-        {
         }
 
         public GroupData(string name)
